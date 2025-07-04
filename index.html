@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume & Cover Letter Writer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Resume & Cover Letter Writer</h1>
+      <p>Create professional resumes and tailored cover letters in minutes</p>
+    </div>
+      <button class="add-button" style="margin-bottom: 20px;" onclick="loadSampleData()">Load Sample Data</button>
+    <div class="main-content">
+      <div class="form-section">
+        <h2>Your Information</h2>
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" placeholder="John Doe">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="john@email.com">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" placeholder="+1 (555) 123-4567">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" placeholder="City, State">
+          </div>
+          <div class="form-group">
+            <label for="linkedin">LinkedIn</label>
+            <input type="url" id="linkedin" placeholder="linkedin.com/in/johndoe">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="summary">Professional Summary</label>
+          <textarea id="summary" placeholder="Brief overview of your professional background and career objectives..."></textarea>
+        </div>
+        <h3>Experience</h3>
+        <div id="experienceContainer">
+          <div class="dynamic-section">
+            <div class="form-group">
+              <label>Job Title</label>
+              <input type="text" class="jobTitle" placeholder="Software Engineer">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Company</label>
+                <input type="text" class="company" placeholder="Tech Corp">
+              </div>
+              <div class="form-group">
+                <label>Duration</label>
+                <input type="text" class="duration" placeholder="Jan 2020 - Present">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea class="description" placeholder="Describe your responsibilities and achievements..."></textarea>
+            </div>
+          </div>
+        </div>
+        <button class="add-button" onclick="addExperience()">Add Experience</button>
+        <h3>Education</h3>
+        <div id="educationContainer">
+          <div class="dynamic-section">
+            <div class="form-group">
+              <label>Degree</label>
+              <input type="text" class="degree" placeholder="Bachelor of Science in Computer Science">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Institution</label>
+                <input type="text" class="institution" placeholder="University of Technology">
+              </div>
+              <div class="form-group">
+                <label>Year</label>
+                <input type="text" class="year" placeholder="2018">
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="add-button" onclick="addEducation()">Add Education</button>
+        <div class="form-group">
+          <label for="skills">Skills (comma-separated)</label>
+          <textarea id="skills" placeholder="JavaScript, Python, React, Node.js, SQL, Git"></textarea>
+        </div>
+        <h3>Cover Letter Information</h3>
+        <div class="form-group">
+          <label for="jobTitle">Target Job Title</label>
+          <input type="text" id="jobTitle" placeholder="Software Engineer">
+        </div>
+        <div class="form-group">
+          <label for="companyName">Company Name</label>
+          <input type="text" id="companyName" placeholder="Tech Innovations Inc.">
+        </div>
+        <div class="form-group">
+          <label for="jobDescription">Job Description (paste key requirements)</label>
+          <textarea id="jobDescription" placeholder="Paste the job description or key requirements here..."></textarea>
+        </div>
+      </div>
+      <div class="preview-section">
+        <div class="tab-buttons">
+          <button class="tab-button active" onclick="showTab('resume')">Resume</button>
+          <button class="tab-button" onclick="showTab('cover-letter')">Cover Letter</button>
+        </div>
+        <div id="resumePreview" class="resume-preview">
+          <div class="resume-header">
+            <h1 id="previewName">Your Name</h1>
+            <div class="contact-info">
+              <span id="previewEmail">email@example.com</span>
+              <span id="previewPhone">+1 (555) 123-4567</span>
+              <span id="previewLocation">City, State</span>
+              <span id="previewLinkedin">LinkedIn Profile</span>
+            </div>
+          </div>
+          <div class="resume-section">
+            <h2>Professional Summary</h2>
+            <p id="previewSummary">Your professional summary will appear here...</p>
+          </div>
+          <div class="resume-section">
+            <h2>Experience</h2>
+            <div id="previewExperience">
+              <div class="experience-item">
+                <h3>Job Title</h3>
+                <div class="experience-meta">Company • Duration</div>
+                <p>Job description and achievements...</p>
+              </div>
+            </div>
+          </div>
+          <div class="resume-section">
+            <h2>Education</h2>
+            <div id="previewEducation">
+              <div class="education-item">
+                <h3>Degree</h3>
+                <div class="education-meta">Institution • Year</div>
+              </div>
+            </div>
+          </div>
+          <div class="resume-section">
+            <h2>Skills</h2>
+            <div class="skills-list" id="previewSkills">
+              <span class="skill-item">Sample Skill</span>
+            </div>
+          </div>
+        </div>
+        <div id="coverLetterPreview" class="cover-letter">
+          <div class="cover-letter-header">
+            <div style="margin-bottom: 20px;">
+              <strong id="clName">Your Name</strong><br>
+              <span id="clEmail">email@example.com</span><br>
+              <span id="clPhone">+1 (555) 123-4567</span><br>
+              <span id="clLocation">City, State</span>
+            </div>
+            <div class="cover-letter-date" id="clDate">
+              December 15, 2023
+            </div>
+            <div>
+              <strong>Hiring Manager</strong><br>
+              <span id="clCompany">Company Name</span>
+            </div>
+          </div>
+          <div class="cover-letter-content">
+            <p><strong>Dear Hiring Manager,</strong></p>
+            <p id="clParagraph1">I am writing to express my strong interest in the <span id="clJobTitle">Software Engineer</span> position at <span id="clCompanyName">Company Name</span>. With my background in software development and passion for innovative technology solutions, I am excited about the opportunity to contribute to your team's continued success.</p>
+            <p id="clParagraph2">In my previous roles, I have developed expertise in various programming languages and frameworks that align perfectly with your requirements. My experience in building scalable applications and working in collaborative environments has prepared me well for the challenges of this position.</p>
+            <p id="clParagraph3">I am particularly drawn to <span id="clCompanyName2">Company Name</span> because of your commitment to innovation and excellence in technology. I would welcome the opportunity to discuss how my skills and enthusiasm can contribute to your team's objectives.</p>
+          </div>
+          <div class="cover-letter-closing">
+            <p>Sincerely,<br>
+            <strong id="clNameClosing">Your Name</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="action-buttons">
+  <button class="action-button" onclick="downloadPDF('resume')">Download Resume PDF</button>
+  <button class="action-button secondary" onclick="downloadPDF('cover-letter')">Download Cover Letter PDF</button>
+  <button class="action-button ai-button" onclick="generateSmartContentWithAI()">AI Generate Content</button>
+  <button class="action-button" onclick="searchJobs()">Find Jobs</button>
+  <button class="action-button secondary" onclick="emailResume()">Email Resume</button>
+  <button class="action-button" onclick="generateResume()">Generate Resume</button>
+  <button class="action-button secondary" onclick="generateCoverLetter()">Generate Cover Letter</button>
+</div>
+    </div>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
